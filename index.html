@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylo's</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e3f2fd;
+            overflow-x: hidden;
+        }
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            z-index: 1000;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+        .menu-button:hover {
+            background-color: #0d47a1;
+        }
+        .menu-lateral {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #1565c0;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            transition: left 0.5s ease, transform 0.5s ease;
+            z-index: 999;
+        }
+        .menu-lateral.open {
+            left: 0;
+        }
+        .menu-lateral h2 {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .menu-lateral ul {
+            list-style: none;
+            padding: 0;
+        }
+        .menu-lateral ul li {
+            margin: 15px 0;
+        }
+        .menu-lateral ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            display: block;
+            transition: color 0.3s;
+        }
+        .menu-lateral ul li a:hover {
+            color: #ff5252;
+        }
+        .banner {
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            background-color: #0d47a1;
+            border-radius: 50px;
+            margin: 20px;
+        }
+        .banner video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50px;
+        }
+        .banner h1 {
+            font-size: 3rem;
+            font-family: "Brush Script MT", cursive;
+            color: white;
+            position: absolute;
+            z-index: 2;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .intro-text {
+            text-align: center;
+            margin: 30px auto;
+            font-size: 1.2rem;
+            color: #37474f;
+            width: 90%;
+            line-height: 1.5;
+        }
+        .gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin: 20px auto;
+            position: relative;
+            width: 90%;
+            height: 300px;
+            border-radius: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            transition: transform 0.5s ease;
+        }
+        .gallery button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 5px;
+        }
+        .gallery button.left {
+            left: 10px;
+        }
+        .gallery button.right {
+            right: 10px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 20px auto;
+        }
+        .social-links img {
+            width: 50px;
+            height: 50px;
+            margin: 0 10px;
+            border-radius: 50%;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .social-links img:hover {
+            transform: scale(1.2);
+        }
+        footer {
+            background-color: #1565c0;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.querySelector('.menu-button');
+            const menuLateral = document.querySelector('.menu-lateral');
+            const galleryImages = document.querySelectorAll('.gallery img');
+            const leftButton = document.querySelector('.gallery .left');
+            const rightButton = document.querySelector('.gallery .right');
+
+            menuButton.addEventListener('click', () => {
+                menuLateral.classList.toggle('open');
+            });
+
+            let currentIndex = 0;
+            const updateGallery = () => {
+                galleryImages.forEach((img, index) => {
+                    img.style.transform = `translateX(${(index - currentIndex) * 100}%)`;
+                });
+            };
+
+            leftButton.addEventListener('click', () => {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : galleryImages.length - 1;
+                updateGallery();
+            });
+
+            rightButton.addEventListener('click', () => {
+                currentIndex = (currentIndex < galleryImages.length - 1) ? currentIndex + 1 : 0;
+                updateGallery();
+            });
+
+            updateGallery();
+        });
+    </script>
+</head>
+<body>
+    <button class="menu-button">Menu</button>
+    <div class="menu-lateral">
+        <h2>Stylo's</h2>
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Estética</a></li>
+            <li><a href="#">Manicure</a></li>
+            <li><a href="#">Reparación</a></li>
+            <li><a href="#">Nieves</a></li>
+        </ul>
+    </div>
+
+    <div class="banner">
+        <video autoplay muted loop>
+            <source src="aleguapo.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de videos.
+        </video>
+        <h1>Bienvenido a Stylo's</h1>
+    </div>
+
+    <div class="intro-text">
+        <p>Somos una empresa familiar con una larga trayectoria de calidad y compromiso. Nuestro objetivo es satisfacer las necesidades y expectativas de todos nuestros clientes, ofreciéndoles un trabajo profesional, personalizado y eficiente.</p>
+    </div>
+
+    <div class="gallery">
+        <button class="left">&lt;</button>
+        <img src="estetica.png" alt="Imagen 1">
+        <img src="manicure.png" alt="Imagen 2">
+        <img src="reparacion.png" alt="Imagen 3">
+        <button class="right">&gt;</button>
+    </div>
+
+    <div class="social-links">
+        <img src="ruta/facebook.png" alt="Facebook">
+        <img src="ruta/whatsapp.png" alt="WhatsApp">
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Stylo's. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
